@@ -85,7 +85,7 @@ def run():
     graph = build_graph()
     config = {"configurable": {"thread_id": "email-session-1"}}
 
-    topic = input("📧 What should the email be about? ").strip()
+    topic = input("What should the email be about? ").strip()
     if not topic:
         print("Topic cannot be empty.")
         return
@@ -98,7 +98,7 @@ def run():
         "iteration": 0,
     }
 
-    print("\n⚙️  Drafting email...\n")
+    print("\n Drafting email...\n")
     graph.invoke(initial_state, config)
 
     while True:
@@ -109,26 +109,26 @@ def run():
         draft = current.get("draft", "")
 
         print(f"{'─'*60}")
-        print(f"📝  Draft #{iteration}:\n")
+        print(f" Draft #{iteration}:\n")
         print(draft)
         print(f"{'─'*60}\n")
 
-        decision = input("✅ Approve or ❌ Reject? [a/r]: ").strip().lower()
+        decision = input("Approve or Reject? [a/r]: ").strip().lower()
 
         if decision == "a":
             graph.update_state(config, {"approved": True, "feedback": None})
             graph.invoke(None, config)
-            print("\n✅ Email approved! Final draft saved above.")
+            print("\n Email approved! Final draft saved above.")
             break
 
         elif decision == "r":
-            feedback = input("💬 Enter your feedback for redrafting: ").strip()
+            feedback = input(" Enter your feedback for redrafting: ").strip()
             if not feedback:
                 print("Feedback cannot be empty for rejection.")
                 continue
 
             graph.update_state(config, {"approved": False, "feedback": feedback})
-            print("\n⚙️  Redrafting based on your feedback...\n")
+            print("\n Redrafting based on your feedback...\n")
             graph.invoke(None, config)
 
         else:
